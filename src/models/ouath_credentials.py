@@ -13,11 +13,22 @@ class OAuthCredentials(BaseModel):
     scopes: List[str]
 
     def __repr__(self):
-        return (f"Credentials(token='{self.token}', "
-                f"refresh_token='{self.refresh_token}', "
-                f"token_uri='{self.token_uri}', "
-                f"client_id='{self.client_id}', "
-                f"scopes={self.scopes})")
+        def _redact(value: str) -> str:
+            if not value:
+                return ""
+            if len(value) <= 8:
+                return "***"
+            return f"{value[:4]}…{value[-4:]}"
+
+        return (
+            "Credentials("
+            f"token='{_redact(self.token)}', "
+            f"refresh_token='{_redact(self.refresh_token)}', "
+            f"token_uri='{self.token_uri}', "
+            f"client_id='{_redact(self.client_id)}', "
+            f"scopes={self.scopes}"
+            ")"
+        )
 
     def to_dict(self):
         return {

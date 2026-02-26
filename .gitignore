@@ -33,10 +33,18 @@ emailEraser/
 *.swo
 
 # Credentials and Secrets
+.env
+.env.*
+!.env.example
 user_credentials.json
+user_credentials*.json
 client_secrets.json
+scheduler_state.json
 *.key
 *.pem
+
+# Local venv/bin artifacts accidentally committed
+bin/
 
 # Logs
 *.log
